@@ -1,8 +1,0 @@
-# 关于localForage和原生Indexeddb的对比
-
-### 前言
-
-最近在项目使用indexeddb作为数据库，最开始对indexedb不太了解所以使用了localforage库。
-localforage应该是目前最火的数据存储库，它对localstorage、websql、indexedb进行了统一封装，最终以类localstorage的方式进行使用，大幅简化了原生数据库的操作方式，并有一个优雅降级策略，若浏览器不支持 indexedDB 或 webSQL，则使用 localStorage，当然它支持主动配置只使用indexedb。
-在使用localforage过程中，虽然操作indexedb变得非常简单，但是同时也发现灵活度基本没了，完全变成了跟localstorage一样，只能进行简单的键值存储，并且感觉执行速度也受到了影响，所以最后又用回到了原生的indexeddb。
-用localforage和原生indexeddb api，有非常大的区别，我觉得如果只使用localforage的话，不但完全不能了解Indexed而且甚至会对它产生误解，所以我想写这篇文章，提醒一下大家最好不要为了图方便在不了解indexedb的情况下，就去使用localforage，特别是要存储比较复杂庞大的数据的时候，它无法满足这样的需求，而且会让你以为indexedb就只能做到简单的键值存储。而真正的indexedb的功能是相当强大的，并不是一个简单的键值对存储工具。
