@@ -46,7 +46,8 @@ btn.onclick触发时很可能已经过了trasanction的存在时间，此时再�
   }
 ```
 我会缓存obj，但是在事务结束或事务异常事件回调里我会把obj置为null，一旦obj为null，我才会重新创建事务，这样在连续操作时可以减少事务创建的时间。
-
+另外，事务有些时候在完成前会进入inactive状态，此时该事物也无法在执行接下来的操作，所以我会捕获执行任意操作时的错误，在产生错误时重新建立事务，
+保证操作成功完成。
 2.indexeddb的索引本质上是建立一张键值表。形式如下：
 
 键就是建立的索引，值就是除索引以外的其余内容，primarykey代表整个store的主键。有多个索引就会创建多张这样的键值表，这些表都会建在store
@@ -54,6 +55,11 @@ btn.onclick触发时很可能已经过了trasanction的存在时间，此时再�
 导致需要的存储空间剧增。
 3.indexeddb容易超过上限时并不会及时利用lru算法删除空间，此时无法继续进行缓存，该错误可以被onabort事件捕获，此时可以人为清除数据或是进行
 提醒用户等操作。
-### 原生实现的indexeddb和locaforage的结果对比
+### 原生indexeddb和locaforage的比较
+首先，localforage无法建立索引，在需要根据索引查找某一类数据时，只能遍历所有数据，在效率上差距太大。
+其次，在使用我自己写的indexeddb代码与localforage进行对比后，在执行大量存取操作时性能提升明显，下图为两者时间对比：
 
+所以，如果对数据库的操作比较复杂的话，非常建议使用原生indexeddb进行开发，无论是功能还是性能都要强大很多。
 ### demo地址
+这是我个人对indexedb的研究demo(https://github.com/lsa2127291/indexeddbDemo)，我把indexedb封装成table的形式这样更接近后端处理数据库的书写方式，如果对indexeddb不太熟悉的朋友，可以参考
+一下里面的一些关于indexedb的基本写法。
