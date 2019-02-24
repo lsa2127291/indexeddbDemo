@@ -18,28 +18,23 @@ export class MprTable {
         const transaction = this.db.transaction([MprTable.tableName], 'readwrite')
         this.objectStoreSet = transaction.objectStore(MprTable.tableName)
         transaction.oncomplete = () => {
-          console.log('complete')
           this.objectStoreSet = null
         }
         transaction.onabort = (e) => {
           this.objectStoreSet = null
         }
-        console.log('transaction')
       }
       try {
         const request = this.objectStoreSet.put({id, data, seriesId})
         request.onsuccess = () => {
-          console.log('success')
           resolve(data)
         }
         request.onerror = () => {
-          console.log('error')
         }
       } catch (err) {
         console.log(err)
         const request = this.db.transaction([MprTable.tableName], 'readwrite').objectStore(MprTable.tableName).put({id, data, seriesId})
         request.onsuccess = () => {
-          console.log('successErr')
           resolve(data)
         }
       }

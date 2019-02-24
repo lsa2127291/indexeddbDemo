@@ -19,20 +19,17 @@ export default {
     //   await mprTable.isDataAllInDb(123, 1000)
     //   console.timeEnd('indexedb')
     // }, 1000)
-    // console.time('indexedb')
+    console.time('origin indexedb')
     for (let i = 0; i < 1000; i++) {
-      await mprTable.set(1 + i, new ArrayBuffer(1000000), 123)
-      console.log(1 + i, await mprTable.get(1 + i))
+      await mprTable.set(1 + i, new ArrayBuffer(1000), 123)
     }
-    // console.timeEnd('indexedb')
-    // console.time('localforage')
-    // for (let i = 1000; i < 2000; i++) {
-    //   const k = `${i + 1}`
-    //   console.log(k)
-    //   await localforage.setItem(k, new ArrayBuffer(1000000))
-    //   console.log('get', await localforage.getItem(k))
-    // }
-    // console.timeEnd('localforage')
+    console.timeEnd('origin indexedb')
+    console.time('localforage')
+    for (let i = 0; i < 1000; i++) {
+      const k = `${i + 1}`
+      await localforage.setItem(k, new ArrayBuffer(1000))
+    }
+    console.timeEnd('localforage')
     // console.log(await mprTable.get(1))
     // console.log(await mprTable.has(1))
     // const event = await openDb()
