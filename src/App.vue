@@ -20,16 +20,23 @@ export default {
     //   console.timeEnd('indexedb')
     // }, 1000)
     console.time('origin indexedb')
-    for (let i = 0; i < 1000; i++) {
-      await mprTable.set(1 + i, new ArrayBuffer(1000), 123)
+    for (let i = 2; i < 3; i++) {
+      console.log(i)
+      await mprTable.set(1 + i, new ArrayBuffer(100000), 123)
     }
     console.timeEnd('origin indexedb')
-    console.time('localforage')
-    for (let i = 0; i < 1000; i++) {
-      const k = `${i + 1}`
-      await localforage.setItem(k, new ArrayBuffer(1000))
+    console.time('origin indexedb')
+    for (let i = 60; i < 120; i++) {
+      console.log(i)
+      await imageTable.set(1 + i, new ArrayBuffer(1000000), 123)
     }
-    console.timeEnd('localforage')
+    console.timeEnd('origin indexedb')
+    // console.time('localforage')
+    // for (let i = 0; i < 1000; i++) {
+    //   const k = `${i + 1}`
+    //   await localforage.setItem(k, new ArrayBuffer(1000))
+    // }
+    // console.timeEnd('localforage')
     // console.log(await mprTable.get(1))
     // console.log(await mprTable.has(1))
     // const event = await openDb()
